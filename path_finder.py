@@ -7,10 +7,22 @@ Point = tp.List[int]
 
 
 class PathFinder3D:
+    """
+    Class used to find the shortest path in the 3d maze
+    """
+
     def __init__(self) -> None:
         pass
 
     def find_path(self, maze: np.ndarray, start: Point, stop: Point) -> tp.List[Point]:
+        """
+        Finds shortest path from start to stop in the maze
+
+        :param maze: 3d maze np.ndarray of zeros and ones
+        :param start: point to start the route from
+        :param stop: point to finish the route in
+        :return: coordinates of the intermediate points
+        """
         assert len(maze.shape) == 3, "Maze must have 3 dimensions"
         visited = np.zeros_like(maze).astype("bool")
         best_path = []
@@ -34,10 +46,15 @@ class PathFinder3D:
         _dfs(start)
         return best_path
 
-
-
     @staticmethod
     def next_possible_points(maze: np.ndarray, point: Point) -> tp.List[Point]:
+        """
+        Finds all points which can be a valid next move in the maze (filtering by maze borders and maze content)
+
+        :param maze: 3d maze np.ndarray of zeros and ones
+        :param point: point to generate next moves from
+        :return: list of possible next points
+        """
         next_points = []
         for x in [-1, 0, 1]:
             for y in [-1, 0, 1]:
